@@ -1,23 +1,6 @@
-ESX              = nil
 local HasRunAlready = false
 local PlayerData = {}
 
-Citizen.CreateThread(function()
-	while ESX == nil do
-		TriggerEvent('esx:getSharedObject', function(obj) ESX = obj end)
-		Citizen.Wait(0)
-	end
-end)
-
-RegisterNetEvent('esx:playerLoaded')
-AddEventHandler('esx:playerLoaded', function(xPlayer)
-  PlayerData = xPlayer   
-end)
-
-RegisterNetEvent('esx:setJob')
-AddEventHandler('esx:setJob', function(job)
-  PlayerData.job = job
-end)
 
 Citizen.CreateThread(function()
    while true do
@@ -179,50 +162,49 @@ function NewDeputyVehicles()
 		vehiclehash2 = GetHashKey('sheriff2')
        	RequestModel(vehiclehash2)
 		Wait(500)
-		
-		if ESX.Game.IsSpawnPointClear(vector3(1854.89, 3675.82, 34.59338), 2) then
+		if not IsPositionOccupied( 1854.89, 3675.82, 34.59338, 2, false, true, false, false, false, 0, false) then
 			spawnedVeh = CreateVehicle(vehiclehash2, 1854.89, 3675.82, 34.59338, 211.93, 0)
 			SetVehicleDirtLevel(spawnedVeh, 0.1)
 		else
 			NoSpawnedVeh = true
 		end
 
-		if ESX.Game.IsSpawnPointClear(vector3(1870.76, 3686.532, 34.59), 2) then
+			if not IsPositionOccupied( 1870.76, 3686.532, 34.59, 2, false, true, false, false, false, 0, false) then
 			spawnedVeh1 = CreateVehicle(vehiclehash, 1870.76, 3686.532, 34.59, 211.93, 0)
 			SetVehicleDirtLevel(spawnedVeh1, 0.1)
 		else
 			NoSpawnedVeh1 = true
 		end
 		
-		if ESX.Game.IsSpawnPointClear(vector3(1875.56, 3689.248, 34.59), 2) then
+		if not IsPositionOccupied( 1875.56, 3689.248, 34.59, 2, false, true, false, false, false, 0, false) then
 			spawnedVeh2 = CreateVehicle(vehiclehash, 1875.56, 3689.248, 34.59, 211.93, 0)
 			SetVehicleDirtLevel(spawnedVeh2, 0.1)
 		else
 			NoSpawnedVeh2 = true
 		end
 
-		if ESX.Game.IsSpawnPointClear(vector3(1850.4, 3673.987, 34.59), 2) then
+			if not IsPositionOccupied(1850.4, 3673.987, 34.59, 2, false, true, false, false, false, 0, false) then
 			spawnedVeh3 = CreateVehicle(vehiclehash2, 1850.4, 3673.987, 34.59, 211.93, 0)
 			SetVehicleDirtLevel(spawnedVeh3, 0.1)
 		else
 			NoSpawnedVeh3 = true
 		end
 
-		if ESX.Game.IsSpawnPointClear(vector3(1846.853, 3671.842, 34.59), 2) then
+			if not IsPositionOccupied(1846.853, 3671.842, 34.59, 2, false, true, false, false, false, 0, false) then
 			spawnedVeh4 = CreateVehicle(vehiclehash, 1846.853, 3671.842, 34.59, 211.93, 0)
 			SetVehicleDirtLevel(spawnedVeh4, 0.1)
 		else
 			NoSpawnedVeh4 = true
 		end
 
-		if ESX.Game.IsSpawnPointClear(vector3(1866.488, 3693.719, 34.59), 2) then
+			if not IsPositionOccupied(1866.488, 3693.719, 34.59, 2, false, true, false, false, false, 0, false) then
 			spawnedVeh5 = CreateVehicle(vehiclehash, 1866.488, 3693.719, 34.59, 211.93, 0)
 			SetVehicleDirtLevel(spawnedVeh5, 0.1)
 		else
 			NoSpawnedVeh5 = true
 		end
 		
-		if ESX.Game.IsSpawnPointClear(vector3(1861.675, 3703.319, 34.59), 2) then
+			if not IsPositionOccupied(1861.675, 3703.319, 34.59, 2, false, true, false, false, false, 0, false) then
 			spawnedVeh6 = CreateVehicle(vehiclehash, 1861.675, 3703.319, 34.59, 211.93, 0)
 			SetVehicleDirtLevel(spawnedVeh6, 0.1)
 		else
