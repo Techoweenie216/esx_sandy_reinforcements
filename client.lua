@@ -162,21 +162,21 @@ function NewDeputyVehicles()
 		vehiclehash2 = GetHashKey('sheriff2')
        	RequestModel(vehiclehash2)
 		Wait(500)
-		if not IsPositionOccupied( 1854.89, 3675.82, 34.59338, 2, false, true, false, false, false, 0, false) then
+		if not IsPositionOccupied(1854.89, 3675.82, 34.59338, 2, false, true, false, false, false, 0, false) then
 			spawnedVeh = CreateVehicle(vehiclehash2, 1854.89, 3675.82, 34.59338, 211.93, 0)
 			SetVehicleDirtLevel(spawnedVeh, 0.1)
 		else
 			NoSpawnedVeh = true
 		end
 
-			if not IsPositionOccupied( 1870.76, 3686.532, 34.59, 2, false, true, false, false, false, 0, false) then
+			if not IsPositionOccupied(1870.76, 3686.532, 34.59, 2, false, true, false, false, false, 0, false) then
 			spawnedVeh1 = CreateVehicle(vehiclehash, 1870.76, 3686.532, 34.59, 211.93, 0)
 			SetVehicleDirtLevel(spawnedVeh1, 0.1)
 		else
 			NoSpawnedVeh1 = true
 		end
 		
-		if not IsPositionOccupied( 1875.56, 3689.248, 34.59, 2, false, true, false, false, false, 0, false) then
+		if not IsPositionOccupied(1875.56, 3689.248, 34.59, 2, false, true, false, false, false, 0, false) then
 			spawnedVeh2 = CreateVehicle(vehiclehash, 1875.56, 3689.248, 34.59, 211.93, 0)
 			SetVehicleDirtLevel(spawnedVeh2, 0.1)
 		else
