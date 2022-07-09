@@ -149,7 +149,7 @@ Citizen.CreateThread(function()
 		SetVehicleDirtLevel(spawnedVeh6, 0.1)
 	end
 	
-	-- if they wander out of General Sandy Area delete them and recreate in Sandy
+	-- if they wander out of General Sandy Area or are dead delete them and recreate in Sandy
 	CheckPatrol1()
 	CheckPatrol2()
 	CheckPatrol3()
@@ -157,11 +157,17 @@ Citizen.CreateThread(function()
 	CheckPatrol5()
 	CheckPatrol6()
 	CheckPatrol7()
+	
+	
+	
+	
+	
 	end
 end
 )	
 
 function CheckPatrol1()
+		isDead = IsPedDeadOrDying(SheriffPatrol1,1)	
 		InArea1 = IsEntityInZone(SheriffPatrol1, 'SANDY')
 		InArea2 = IsEntityInZone(SheriffPatrol1, 'GRAPE')
 		InArea3 = IsEntityInZone(SheriffPatrol1, 'DESRT')
@@ -177,8 +183,19 @@ function CheckPatrol1()
 			NewDeputy1()
 			RollOut1()
 		end
+		
+		if isDead then
+		DeletePed(SheriffPatrol1)
+		Wait(100)
+		DeleteVehicle(spawnedVeh1)
+		Wait(100)
+		NewDeputyVehicles1()
+		NewDeputy1()
+		RollOut1()
+		end
 end
 function CheckPatrol2()
+		isDead = IsPedDeadOrDying(SheriffPatrol2,1)	
 		InArea1 = IsEntityInZone(SheriffPatrol2, 'SANDY')
 		InArea2 = IsEntityInZone(SheriffPatrol2, 'GRAPE')
 		InArea3 = IsEntityInZone(SheriffPatrol2, 'DESRT')
@@ -194,8 +211,19 @@ function CheckPatrol2()
 			NewDeputy2()
 			RollOut2()
 		end
+		
+		if isDead then
+		DeletePed(SheriffPatrol2)
+		Wait(100)
+		DeleteVehicle(spawnedVeh2)
+		Wait(100)
+		NewDeputyVehicles2()
+		NewDeputy2()
+		RollOut2()
+		end
 end
 function CheckPatrol3()
+		isDead = IsPedDeadOrDying(SheriffPatrol3,1)	
 		InArea1 = IsEntityInZone(SheriffPatrol3, 'SANDY')
 		InArea2 = IsEntityInZone(SheriffPatrol3, 'GRAPE')
 		InArea3 = IsEntityInZone(SheriffPatrol3, 'DESRT')
@@ -211,8 +239,19 @@ function CheckPatrol3()
 			NewDeputy3()
 			RollOut3()
 		end
+		
+		if isDead then
+		DeletePed(SheriffPatrol3)
+		Wait(100)
+		DeleteVehicle(spawnedVe3)
+		Wait(100)
+		NewDeputyVehicles3()
+		NewDeputy3()
+		RollOut3()
+		end
 end
 function CheckPatrol4()
+		isDead = IsPedDeadOrDying(SheriffPatrol4,1)	
 		InArea1 = IsEntityInZone(SheriffPatrol4, 'SANDY')
 		InArea2 = IsEntityInZone(SheriffPatrol4, 'GRAPE')
 		InArea3 = IsEntityInZone(SheriffPatrol4, 'DESRT')
@@ -228,8 +267,19 @@ function CheckPatrol4()
 			NewDeputy4()
 			RollOut4()
 		end
+		
+		if isDead then
+		DeletePed(SheriffPatrol4)
+		Wait(100)
+		DeleteVehicle(spawnedVeh4)
+		Wait(100)
+		NewDeputyVehicles4()
+		NewDeputy4()
+		RollOut4()
+		end
 end
 function CheckPatrol5()
+		isDead = IsPedDeadOrDying(SheriffPatrol5,1)	
 		InArea1 = IsEntityInZone(SheriffPatrol5, 'SANDY')
 		InArea2 = IsEntityInZone(SheriffPatrol5, 'GRAPE')
 		InArea3 = IsEntityInZone(SheriffPatrol5, 'DESRT')
@@ -245,8 +295,19 @@ function CheckPatrol5()
 			NewDeputy5()
 			RollOut5()
 		end
+		
+		if isDead then
+		DeletePed(SheriffPatrol5)
+		Wait(100)
+		DeleteVehicle(spawnedVeh5)
+		Wait(100)
+		NewDeputyVehicles5()
+		NewDeputy5()
+		RollOut5()
+		end		
 end
 function CheckPatrol6()
+		isDead = IsPedDeadOrDying(SheriffPatrol6,1)	
 		InArea1 = IsEntityInZone(SheriffPatrol6, 'SANDY')
 		InArea2 = IsEntityInZone(SheriffPatrol6, 'GRAPE')
 		InArea3 = IsEntityInZone(SheriffPatrol6, 'DESRT')
@@ -262,8 +323,19 @@ function CheckPatrol6()
 			NewDeputy6()
 			RollOut6()
 		end
+
+		if isDead then
+		DeletePed(SheriffPatrol6)
+		Wait(100)
+		DeleteVehicle(spawnedVeh6)
+		Wait(100)
+		NewDeputyVehicles6()
+		NewDeputy6()
+		RollOut6()
+		end
 end
 function CheckPatrol7()
+		isDead = IsPedDeadOrDying(SheriffPatrol7,1)	
 		InArea1 = IsEntityInZone(SheriffPatrol7, 'SANDY')
 		InArea2 = IsEntityInZone(SheriffPatrol7, 'GRAPE')
 		InArea3 = IsEntityInZone(SheriffPatrol7, 'DESRT')
@@ -278,6 +350,16 @@ function CheckPatrol7()
 			NewDeputyVehicles7()
 			NewDeputy7()
 			RollOut7()
+		end
+
+		if isDead then
+		DeletePed(SheriffPatrol7)
+		Wait(100)
+		DeleteVehicle(spawnedVeh7)
+		Wait(100)
+		NewDeputyVehicles7()
+		NewDeputy7()
+		RollOut7()
 		end
 end   	
 
@@ -425,14 +507,14 @@ function NewDeputyVehicles5()
 end		
 
 function NewDeputyVehicles6()
-	ClearAreaOfVehicles(1866.48, 3693.71, 34.59, 3, false, false, false, false, false)
-	spawnedVeh6 = CreateVehicle(vehiclehash3, 1866.488, 3693.719, 34.59, 211.93, 0)
+	ClearAreaOfVehicles(1865.407, 3703.728, 34.59, 3, false, false, false, false, false)
+	spawnedVeh6 = CreateVehicle(vehiclehash3, 1865.407, 3703.728, 34.59, 31.93, 0)
 	SetVehicleDirtLevel(spawnedVeh6, 0.1)
 end		
 
 function NewDeputyVehicles7()
-	ClearAreaOfVehicles(1861.67, 3703.31, 34.59, 3, false, false, false, false, false)	
-	spawnedVeh7 = CreateVehicle(vehiclehash, 1861.675, 3703.319, 34.59, 211.93, 0)
+	ClearAreaOfVehicles(1859.789, 3715.187, 34.59, 3, false, false, false, false, false)	
+	spawnedVeh7 = CreateVehicle(vehiclehash, 1859.789, 3715.187, 34.59, 31.93, 0)
 	SetVehicleDirtLevel(spawnedVeh7, 0.1)
 end		
 
