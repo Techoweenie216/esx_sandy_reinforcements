@@ -59,24 +59,11 @@ Citizen.CreateThread(function()
 	
 -- after incident get back in the vehicle, turn off lights and siren and repair vehicle
 	if IsPedGettingIntoAVehicle(SheriffPatrol1) and IsVehicleSirenAudioOn(spawnedVeh1) then
-		SetVehicleSiren(spawnedVeh, false)
-		SetVehicleEngineHealth(spawnedVeh, 1000.0)
-		SetVehicleFixed(spawnedVeh)
-		SetVehicleDeformationFixed(spawnedVeh)
-		SetVehicleFuelLevel(spawnedVeh, 100.0)
-		SetVehicleWheelHealth(spawnedVeh, 1.0, 100.00)
-		SetVehicleWheelHealth(spawnedVeh, 2.0, 100.00)
-		SetVehicleWheelHealth(spawnedVeh, 3.0, 100.00)
-		SetVehicleWheelHealth(spawnedVeh, 4.0, 100.00)
-		SetVehicleDirtLevel(spawnedVeh, 0.1)
-	end
-
-	if IsPedGettingIntoAVehicle(SheriffPatrol2) and IsVehicleSirenAudioOn(spawnedVeh2) then
 		SetVehicleSiren(spawnedVeh1, false)
 		SetVehicleEngineHealth(spawnedVeh1, 1000.0)
 		SetVehicleFixed(spawnedVeh1)
 		SetVehicleDeformationFixed(spawnedVeh1)
-		SetVehicleFuelLevel(spawnedVeh1,100.0)
+		SetVehicleFuelLevel(spawnedVeh1, 100.0)
 		SetVehicleWheelHealth(spawnedVeh1, 1.0, 100.00)
 		SetVehicleWheelHealth(spawnedVeh1, 2.0, 100.00)
 		SetVehicleWheelHealth(spawnedVeh1, 3.0, 100.00)
@@ -84,7 +71,7 @@ Citizen.CreateThread(function()
 		SetVehicleDirtLevel(spawnedVeh1, 0.1)
 	end
 
-	if IsPedGettingIntoAVehicle(SheriffPatrol3) and IsVehicleSirenAudioOn(spawnedVeh3) then
+	if IsPedGettingIntoAVehicle(SheriffPatrol2) and IsVehicleSirenAudioOn(spawnedVeh2) then
 		SetVehicleSiren(spawnedVeh2, false)
 		SetVehicleEngineHealth(spawnedVeh2, 1000.0)
 		SetVehicleFixed(spawnedVeh2)
@@ -97,7 +84,7 @@ Citizen.CreateThread(function()
 		SetVehicleDirtLevel(spawnedVeh2, 0.1)
 	end
 
-	if IsPedGettingIntoAVehicle(SheriffPatrol4) and IsVehicleSirenAudioOn(spawnedVeh4) then
+	if IsPedGettingIntoAVehicle(SheriffPatrol3) and IsVehicleSirenAudioOn(spawnedVeh3) then
 		SetVehicleSiren(spawnedVeh3, false)
 		SetVehicleEngineHealth(spawnedVeh3, 1000.0)
 		SetVehicleFixed(spawnedVeh3)
@@ -110,7 +97,7 @@ Citizen.CreateThread(function()
 		SetVehicleDirtLevel(spawnedVeh3, 0.1)
 	end
 
-	if IsPedGettingIntoAVehicle(SheriffPatrol5) and IsVehicleSirenAudioOn(spawnedVeh5) then
+	if IsPedGettingIntoAVehicle(SheriffPatrol4) and IsVehicleSirenAudioOn(spawnedVeh4) then
 		SetVehicleSiren(spawnedVeh4, false)
 		SetVehicleEngineHealth(spawnedVeh4, 1000.0)
 		SetVehicleFixed(spawnedVeh4)
@@ -123,7 +110,7 @@ Citizen.CreateThread(function()
 		SetVehicleDirtLevel(spawnedVeh4, 0.1)
 	end
 
-	if IsPedGettingIntoAVehicle(SheriffPatrol6) and IsVehicleSirenAudioOn(spawnedVeh6) then
+	if IsPedGettingIntoAVehicle(SheriffPatrol5) and IsVehicleSirenAudioOn(spawnedVeh5) then
 		SetVehicleSiren(spawnedVeh5, false)
 		SetVehicleEngineHealth(spawnedVeh5, 1000.0)
 		SetVehicleFixed(spawnedVeh5)
@@ -136,7 +123,7 @@ Citizen.CreateThread(function()
 		SetVehicleDirtLevel(spawnedVeh5, 0.1)
 	end
 
-	if IsPedGettingIntoAVehicle(SheriffPatrol7) and IsVehicleSirenAudioOn(spawnedVeh7) then
+	if IsPedGettingIntoAVehicle(SheriffPatrol6) and IsVehicleSirenAudioOn(spawnedVeh6) then
 		SetVehicleSiren(spawnedVeh6, false)
 		SetVehicleEngineHealth(spawnedVeh6, 1000.0)
 		SetVehicleFixed(spawnedVeh6)
@@ -147,6 +134,19 @@ Citizen.CreateThread(function()
 		SetVehicleWheelHealth(spawnedVeh6, 3.0, 100.00)
 		SetVehicleWheelHealth(spawnedVeh6, 4.0, 100.00)
 		SetVehicleDirtLevel(spawnedVeh6, 0.1)
+	end
+
+	if IsPedGettingIntoAVehicle(SheriffPatrol7) and IsVehicleSirenAudioOn(spawnedVeh7) then
+		SetVehicleSiren(spawnedVeh7, false)
+		SetVehicleEngineHealth(spawnedVeh7, 1000.0)
+		SetVehicleFixed(spawnedVeh7)
+		SetVehicleDeformationFixed(spawnedVeh7)
+		SetVehicleFuelLevel(spawnedVeh7,100.0)
+		SetVehicleWheelHealth(spawnedVeh7, 1.0, 100.00)
+		SetVehicleWheelHealth(spawnedVeh7, 2.0, 100.00)
+		SetVehicleWheelHealth(spawnedVeh7, 3.0, 100.00)
+		SetVehicleWheelHealth(spawnedVeh7, 4.0, 100.00)
+		SetVehicleDirtLevel(spawnedVeh7, 0.1)
 	end
 	
 	-- if they wander out of General Sandy Area or are dead delete them and recreate in Sandy
