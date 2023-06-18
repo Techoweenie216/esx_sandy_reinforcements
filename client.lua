@@ -1,555 +1,159 @@
-local HasRunAlready = false
-
-
+local markerPos = vector3(3432.34, 3760.28, 30.47)
+local HasAlreadyGotMessage = false
 
 Citizen.CreateThread(function()
    while true do
-	ped = GetPlayerPed(-1)
-   	Citizen.Wait(0)
+	local ped = GetPlayerPed(-1)
+   	
+	Citizen.Wait(0)
+	local playerCoords = GetEntityCoords(ped)
+	local distance = #(playerCoords - markerPos)
+	local isInMarker = false	
+	--print(distance)
+		if distance < 5.0 then
+		DrawMarker(42, markerPos.x, markerPos.y, markerPos.z , 0.0, 0.0, 0.0, 0.0, 180.0, 0.0, 2.0, 2.0, 2.0, 255, 0, 0, 50, false, false, 2, nil, nil, false)
+	    	if distance < 2.0 then
+			   isInMarker = true
+			else
+			   HasAlreadyGotMessage = false
+			end
+		else
+			Citizen.Wait(2000)
+		end
 	
-	if not HasRunAlready then
+		-- Security Ped
+		if isInMarker and not HasAlreadyGotMessage then
+			--generate new guards
+			NewSecurityGuard1()
+			NewSecurityGuard2()
+			NewSecurityGuard3()
+			NewSecurityGuard4()
+			
+			--give the warning
+			TriggerEvent('chatMessage', 'You do not have authorization to be here. LEAVE NOW!')
+			TriggerEvent('chatMessage', 'Lethal force is authorized. LEAVE NOW!')	
+			HasAlreadyGotMessage = true
+		end
 		
-		RequestModel(0xB144F9B9)
-		Wait(500)
-		RequestModel(0x4161D042)
-		Wait(500)
-		vehiclehash = GetHashKey('SHERIFF')
-       	RequestModel(vehiclehash)
-		Wait(500)
-		vehiclehash2 = GetHashKey('SHERIFF2')
-       	RequestModel(vehiclehash2)
-		Wait(500)
-		vehiclehash3 = GetHashKey('BCSO1')
-       	RequestModel(vehiclehash3)
-		Wait(500)
-		print('end of request')
+		if humanesecurity1 then
+			checkalive1()
+		end	
+		if humanesecurity2 then
+			checkalive2()
+		end
+		if humanesecurity3 then
+			checkalive3()
+		end
+		if humanesecurity4 then
+			checkalive4()
+		end
+
+		inthearea()	
 		
-		-- spawn cars	
-		
-		NewDeputyVehicles1()
-		NewDeputyVehicles2()
-		NewDeputyVehicles3()
-		NewDeputyVehicles4()
-		NewDeputyVehicles5()
-		NewDeputyVehicles6()
-		NewDeputyVehicles7()
-		print('Done Spawning Cars')
-		
-		-- spawn peds
-		NewDeputy1()
-		NewDeputy2()
-		NewDeputy3()
-		NewDeputy4()
-		NewDeputy5()
-		NewDeputy6()
-		NewDeputy7()
-		print('Done Spawning Peds')
-
-		
-		-- send them on their way
-		RollOut1()
-		RollOut2()
-		RollOut3()
-		RollOut4()
-		RollOut5()
-		RollOut6()
-		RollOut7()
-		HasRunAlready = true
-	end
-	
--- after incident get back in the vehicle, turn off lights and siren and repair vehicle
-	if IsPedGettingIntoAVehicle(SheriffPatrol1) and IsVehicleSirenAudioOn(spawnedVeh1) then
-		SetVehicleSiren(spawnedVeh1, false)
-		SetVehicleEngineHealth(spawnedVeh1, 1000.0)
-		SetVehicleFixed(spawnedVeh1)
-		SetVehicleDeformationFixed(spawnedVeh1)
-		SetVehicleFuelLevel(spawnedVeh1, 100.0)
-		SetVehicleWheelHealth(spawnedVeh1, 1.0, 100.00)
-		SetVehicleWheelHealth(spawnedVeh1, 2.0, 100.00)
-		SetVehicleWheelHealth(spawnedVeh1, 3.0, 100.00)
-		SetVehicleWheelHealth(spawnedVeh1, 4.0, 100.00)
-		SetVehicleDirtLevel(spawnedVeh1, 0.1)
 	end
 
-	if IsPedGettingIntoAVehicle(SheriffPatrol2) and IsVehicleSirenAudioOn(spawnedVeh2) then
-		SetVehicleSiren(spawnedVeh2, false)
-		SetVehicleEngineHealth(spawnedVeh2, 1000.0)
-		SetVehicleFixed(spawnedVeh2)
-		SetVehicleDeformationFixed(spawnedVeh2)
-		SetVehicleFuelLevel(spawnedVeh2,100.0)
-		SetVehicleWheelHealth(spawnedVeh2, 1.0, 100.00)
-		SetVehicleWheelHealth(spawnedVeh2, 2.0, 100.00)
-		SetVehicleWheelHealth(spawnedVeh2, 3.0, 100.00)
-		SetVehicleWheelHealth(spawnedVeh2, 4.0, 100.00)
-		SetVehicleDirtLevel(spawnedVeh2, 0.1)
-	end
 
-	if IsPedGettingIntoAVehicle(SheriffPatrol3) and IsVehicleSirenAudioOn(spawnedVeh3) then
-		SetVehicleSiren(spawnedVeh3, false)
-		SetVehicleEngineHealth(spawnedVeh3, 1000.0)
-		SetVehicleFixed(spawnedVeh3)
-		SetVehicleDeformationFixed(spawnedVeh3)
-		SetVehicleFuelLevel(spawnedVeh3,100.0)
-		SetVehicleWheelHealth(spawnedVeh3, 1.0, 100.00)
-		SetVehicleWheelHealth(spawnedVeh3, 2.0, 100.00)
-		SetVehicleWheelHealth(spawnedVeh3, 3.0, 100.00)
-		SetVehicleWheelHealth(spawnedVeh3, 4.0, 100.00)
-		SetVehicleDirtLevel(spawnedVeh3, 0.1)
-	end
+   	
+end)
 
-	if IsPedGettingIntoAVehicle(SheriffPatrol4) and IsVehicleSirenAudioOn(spawnedVeh4) then
-		SetVehicleSiren(spawnedVeh4, false)
-		SetVehicleEngineHealth(spawnedVeh4, 1000.0)
-		SetVehicleFixed(spawnedVeh4)
-		SetVehicleDeformationFixed(spawnedVeh4)
-		SetVehicleFuelLevel(spawnedVeh4,100.0)
-		SetVehicleWheelHealth(spawnedVeh4, 1.0, 100.00)
-		SetVehicleWheelHealth(spawnedVeh4, 2.0, 100.00)
-		SetVehicleWheelHealth(spawnedVeh4, 3.0, 100.00)
-		SetVehicleWheelHealth(spawnedVeh4, 4.0, 100.00)
-		SetVehicleDirtLevel(spawnedVeh4, 0.1)
-	end
+function inthearea()
 
-	if IsPedGettingIntoAVehicle(SheriffPatrol5) and IsVehicleSirenAudioOn(spawnedVeh5) then
-		SetVehicleSiren(spawnedVeh5, false)
-		SetVehicleEngineHealth(spawnedVeh5, 1000.0)
-		SetVehicleFixed(spawnedVeh5)
-		SetVehicleDeformationFixed(spawnedVeh5)
-		SetVehicleFuelLevel(spawnedVeh5,100.0)
-		SetVehicleWheelHealth(spawnedVeh5, 1.0, 100.00)
-		SetVehicleWheelHealth(spawnedVeh5, 2.0, 100.00)
-		SetVehicleWheelHealth(spawnedVeh5, 3.0, 100.00)
-		SetVehicleWheelHealth(spawnedVeh5, 4.0, 100.00)
-		SetVehicleDirtLevel(spawnedVeh5, 0.1)
+	--CHECK TO SEE IF THEY HAVE LEFT THE HUMANE LABS AREA		
+	InHumaneArea1 = IsEntityInZone(humanesecurity1, 'HUMLAB')
+	InHumaneArea2 = IsEntityInZone(humanesecurity2, 'HUMLAB')
+	InHumaneArea3 = IsEntityInZone(humanesecurity3, 'HUMLAB')
+	InHumaneArea4 = IsEntityInZone(humanesecurity4, 'HUMLAB')
+	
+	if humanesecurity1 and not InHumaneArea1 then
+		DeletePed(humanesecurity1)
 	end
-
-	if IsPedGettingIntoAVehicle(SheriffPatrol6) and IsVehicleSirenAudioOn(spawnedVeh6) then
-		SetVehicleSiren(spawnedVeh6, false)
-		SetVehicleEngineHealth(spawnedVeh6, 1000.0)
-		SetVehicleFixed(spawnedVeh6)
-		SetVehicleDeformationFixed(spawnedVeh6)
-		SetVehicleFuelLevel(spawnedVeh6,100.0)
-		SetVehicleWheelHealth(spawnedVeh6, 1.0, 100.00)
-		SetVehicleWheelHealth(spawnedVeh6, 2.0, 100.00)
-		SetVehicleWheelHealth(spawnedVeh6, 3.0, 100.00)
-		SetVehicleWheelHealth(spawnedVeh6, 4.0, 100.00)
-		SetVehicleDirtLevel(spawnedVeh6, 0.1)
+	if humanesecurity2 and not InHumaneArea2 then
+		DeletePed(humanesecurity2)
 	end
-
-	if IsPedGettingIntoAVehicle(SheriffPatrol7) and IsVehicleSirenAudioOn(spawnedVeh7) then
-		SetVehicleSiren(spawnedVeh7, false)
-		SetVehicleEngineHealth(spawnedVeh7, 1000.0)
-		SetVehicleFixed(spawnedVeh7)
-		SetVehicleDeformationFixed(spawnedVeh7)
-		SetVehicleFuelLevel(spawnedVeh7,100.0)
-		SetVehicleWheelHealth(spawnedVeh7, 1.0, 100.00)
-		SetVehicleWheelHealth(spawnedVeh7, 2.0, 100.00)
-		SetVehicleWheelHealth(spawnedVeh7, 3.0, 100.00)
-		SetVehicleWheelHealth(spawnedVeh7, 4.0, 100.00)
-		SetVehicleDirtLevel(spawnedVeh7, 0.1)
+	if humanesecurity3 and not InHumaneArea3 then
+		DeletePed(humanesecurity3)
 	end
-	
-	-- if they wander out of General Sandy Area or are dead delete them and recreate in Sandy
-	CheckPatrol1()
-	CheckPatrol2()
-	CheckPatrol3()
-	CheckPatrol4()
-	CheckPatrol5()
-	CheckPatrol6()
-	CheckPatrol7()
-	
-	
-	
-	
-	
+	if humanesecurity4 and not InHumaneArea4 then
+		DeletePed(humanesecurity4)
 	end
 end
-)	
 
-function CheckPatrol1()
-		isDead = IsPedDeadOrDying(SheriffPatrol1,1)	
-		InArea1 = IsEntityInZone(SheriffPatrol1, 'SANDY')
-		InArea2 = IsEntityInZone(SheriffPatrol1, 'GRAPE')
-		InArea3 = IsEntityInZone(SheriffPatrol1, 'DESRT')
-		InArea4 = IsEntityInZone(SheriffPatrol1, 'SLAB')
-		InArea5 = IsEntityInZone(SheriffPatrol1, 'HARMO')
+
+function NewSecurityGuard1()
+	RequestModel(0x2EFEAFD5) 
+	humanesecurity1 = CreatePed(30, 0x2EFEAFD5, 3513.47, 3759.2, 30.12, 348.42, true, false)
+	SetPedArmour(humanesecurity1, 0)
+	SetPedAsEnemy(humanesecurity1, true)
+	SetPedRelationshipGroupHash(humanesecurity1, 0xF50B51B7)
+	GiveWeaponToPed(humanesecurity1, GetHashKey('WEAPON_PISTOL'), 250, false, true)
+	GiveWeaponToPed(humanesecurity1, GetHashKey('WEAPON_TACTICALRIFLE'), 250, false, true)
+	TaskCombatPed(humanesecurity1, GetPlayerPed(-1))
+	SetPedAccuracy(humanesecurity1, 30)
+	SetPedDropsWeaponsWhenDead(humanesecurity1, true)
+	Citizen.Wait(500)
+end
+
+function NewSecurityGuard2()		
+	humanesecurity2 =  CreatePed(30, 0x2EFEAFD5, 3515.9, 3757.14, 30.70, 348.42, true, false)
+	SetPedArmour(humanesecurity2, 0)
+	SetPedAsEnemy(humanesecurity2, true)
+	SetPedRelationshipGroupHash(humanesecurity2, 0xF50B51B7)
+	GiveWeaponToPed(humanesecurity2, GetHashKey('WEAPON_PISTOL'), 250, false, true)
+	GiveWeaponToPed(humanesecurity2, GetHashKey('WEAPON_TACTICALRIFLE'), 250, false, true)
+	TaskCombatPed(humanesecurity2, GetPlayerPed(-1))
+	SetPedAccuracy(humanesecurity2, 30)
+	SetPedDropsWeaponsWhenDead(humanesecurity2, true)
+	Citizen.Wait(550)
+end		
+
+function NewSecurityGuard3()		
+	humanesecurity3 =  CreatePed(30, 0x2EFEAFD5, 3519.09, 3756.09, 30.70, 348.42, true, false)
+	SetPedArmour(humanesecurity3, 0)
+	SetPedAsEnemy(humanesecurity3, true)
+	SetPedRelationshipGroupHash(humanesecurity3, 0xF50B51B7)
+	GiveWeaponToPed(humanesecurity3, GetHashKey('WEAPON_PISTOL'), 250, false, true)
+	GiveWeaponToPed(humanesecurity3, GetHashKey('WEAPON_TACTICALRIFLE'), 250, false, true)
+	TaskCombatPed(humanesecurity3, GetPlayerPed(-1))
+	SetPedAccuracy(humanesecurity3, 30)
+	SetPedDropsWeaponsWhenDead(govfacility4, true)
+	Citizen.Wait(550)
+end
 	
-		if not InArea1 and not InArea2 and not InArea3 and not InArea4 and not InArea5 then
-			DeleteVehicle(spawnedVeh1)
-			Wait(100)
-			DeletePed(SheriffPatrol1)
-			Wait(100)
-			NewDeputyVehicles1()
-			NewDeputy1()
-			RollOut1()
+function NewSecurityGuard4()	
+	humanesecurity4 =  CreatePed(30, 0x2EFEAFD5, 3431.32, 3671.54, 41.34, 348.37, true, false)
+	SetPedArmour(humanesecurity4, 0)
+	SetPedAsEnemy(humanesecurity4, true)
+	SetPedRelationshipGroupHash(humanesecurity4, 0xF50B51B7)
+	GiveWeaponToPed(humanesecurity4, GetHashKey('WEAPON_PISTOL'), 250, false, true)
+	GiveWeaponToPed(humanesecurity4, GetHashKey('WEAPON_TACTICALRIFLE'), 250, false, true)
+	TaskCombatPed(humanesecurity4, GetPlayerPed(-1))
+	SetPedAccuracy(humanesecurity4, 30)
+	SetPedDropsWeaponsWhenDead(govfacility4, true)
+	Citizen.Wait(600)
+end		
+
+	-- CHECK TO SEE IF THEY ARE DEAD
+function checkalive1()
+	isDead1 = IsPedDeadOrDying(humanesecurity1,1)
+		if isDead1 then
+			DeletePed(humanesecurity1)
 		end
-		
-		if isDead then
-		DeletePed(SheriffPatrol1)
-		Wait(100)
-		DeleteVehicle(spawnedVeh1)
-		Wait(100)
-		NewDeputyVehicles1()
-		NewDeputy1()
-		RollOut1()
+end	
+function checkalive2()
+	isDead2 = IsPedDeadOrDying(humanesecurity2,1)
+		if isDead2 then
+			DeletePed(humanesecurity2)
 		end
 end
-function CheckPatrol2()
-		isDead = IsPedDeadOrDying(SheriffPatrol2,1)	
-		InArea1 = IsEntityInZone(SheriffPatrol2, 'SANDY')
-		InArea2 = IsEntityInZone(SheriffPatrol2, 'GRAPE')
-		InArea3 = IsEntityInZone(SheriffPatrol2, 'DESRT')
-		InArea4 = IsEntityInZone(SheriffPatrol2, 'SLAB')
-		InArea5 = IsEntityInZone(SheriffPatrol2, 'HARMO')
-	
-		if not InArea1 and not InArea2 and not InArea3 and not InArea4 and not InArea5 then
-			DeleteVehicle(spawnedVeh2)
-			Wait(100)
-			DeletePed(SheriffPatrol2)
-			Wait(100)
-			NewDeputyVehicles2()
-			NewDeputy2()
-			RollOut2()
-		end
-		
-		if isDead then
-		DeletePed(SheriffPatrol2)
-		Wait(100)
-		DeleteVehicle(spawnedVeh2)
-		Wait(100)
-		NewDeputyVehicles2()
-		NewDeputy2()
-		RollOut2()
-		end
-end
-function CheckPatrol3()
-		isDead = IsPedDeadOrDying(SheriffPatrol3,1)	
-		InArea1 = IsEntityInZone(SheriffPatrol3, 'SANDY')
-		InArea2 = IsEntityInZone(SheriffPatrol3, 'GRAPE')
-		InArea3 = IsEntityInZone(SheriffPatrol3, 'DESRT')
-		InArea4 = IsEntityInZone(SheriffPatrol3, 'SLAB')
-		InArea5 = IsEntityInZone(SheriffPatrol3, 'HARMO')
-	
-		if not InArea1 and not InArea2 and not InArea3 and not InArea4 and not InArea5 then
-			DeleteVehicle(spawnedVeh3)
-			Wait(100)
-			DeletePed(SheriffPatrol3)
-			Wait(100)
-			NewDeputyVehicles3()
-			NewDeputy3()
-			RollOut3()
-		end
-		
-		if isDead then
-		DeletePed(SheriffPatrol3)
-		Wait(100)
-		DeleteVehicle(spawnedVe3)
-		Wait(100)
-		NewDeputyVehicles3()
-		NewDeputy3()
-		RollOut3()
-		end
-end
-function CheckPatrol4()
-		isDead = IsPedDeadOrDying(SheriffPatrol4,1)	
-		InArea1 = IsEntityInZone(SheriffPatrol4, 'SANDY')
-		InArea2 = IsEntityInZone(SheriffPatrol4, 'GRAPE')
-		InArea3 = IsEntityInZone(SheriffPatrol4, 'DESRT')
-		InArea4 = IsEntityInZone(SheriffPatrol4, 'SLAB')
-		InArea5 = IsEntityInZone(SheriffPatrol4, 'HARMO')
-	
-		if not InArea1 and not InArea2 and not InArea3 and not InArea4 and not InArea5 then
-			DeleteVehicle(spawnedVeh4)
-			Wait(100)
-			DeletePed(SheriffPatrol4)
-			Wait(100)
-			NewDeputyVehicles4()
-			NewDeputy4()
-			RollOut4()
-		end
-		
-		if isDead then
-		DeletePed(SheriffPatrol4)
-		Wait(100)
-		DeleteVehicle(spawnedVeh4)
-		Wait(100)
-		NewDeputyVehicles4()
-		NewDeputy4()
-		RollOut4()
-		end
-end
-function CheckPatrol5()
-		isDead = IsPedDeadOrDying(SheriffPatrol5,1)	
-		InArea1 = IsEntityInZone(SheriffPatrol5, 'SANDY')
-		InArea2 = IsEntityInZone(SheriffPatrol5, 'GRAPE')
-		InArea3 = IsEntityInZone(SheriffPatrol5, 'DESRT')
-		InArea4 = IsEntityInZone(SheriffPatrol5, 'SLAB')
-		InArea5 = IsEntityInZone(SheriffPatrol5, 'HARMO')
-	
-		if not InArea1 and not InArea2 and not InArea3 and not InArea4 and not InArea5 then
-			DeleteVehicle(spawnedVeh5)
-			Wait(100)
-			DeletePed(SheriffPatrol5)
-			Wait(100)
-			NewDeputyVehicles5()
-			NewDeputy5()
-			RollOut5()
-		end
-		
-		if isDead then
-		DeletePed(SheriffPatrol5)
-		Wait(100)
-		DeleteVehicle(spawnedVeh5)
-		Wait(100)
-		NewDeputyVehicles5()
-		NewDeputy5()
-		RollOut5()
+function checkalive3()
+	isDead3 = IsPedDeadOrDying(humanesecurity3,1)
+		if isDead3 then
+			DeletePed(humanesecurity3)
 		end		
 end
-function CheckPatrol6()
-		isDead = IsPedDeadOrDying(SheriffPatrol6,1)	
-		InArea1 = IsEntityInZone(SheriffPatrol6, 'SANDY')
-		InArea2 = IsEntityInZone(SheriffPatrol6, 'GRAPE')
-		InArea3 = IsEntityInZone(SheriffPatrol6, 'DESRT')
-		InArea4 = IsEntityInZone(SheriffPatrol6, 'SLAB')
-		InArea5 = IsEntityInZone(SheriffPatrol6, 'HARMO')
-	
-		if not InArea1 and not InArea2 and not InArea3 and not InArea4 and not InArea5 then
-			DeleteVehicle(spawnedVeh6)
-			Wait(100)
-			DeletePed(SheriffPatrol6)
-			Wait(100)
-			NewDeputyVehicles6()
-			NewDeputy6()
-			RollOut6()
-		end
-
-		if isDead then
-		DeletePed(SheriffPatrol6)
-		Wait(100)
-		DeleteVehicle(spawnedVeh6)
-		Wait(100)
-		NewDeputyVehicles6()
-		NewDeputy6()
-		RollOut6()
-		end
+function checkalive4()
+	isDead4 = IsPedDeadOrDying(humanesecurity4,1)
+		if isDead4 then
+			DeletePed(humanesecurity4)
+		end	
 end
-function CheckPatrol7()
-		isDead = IsPedDeadOrDying(SheriffPatrol7,1)	
-		InArea1 = IsEntityInZone(SheriffPatrol7, 'SANDY')
-		InArea2 = IsEntityInZone(SheriffPatrol7, 'GRAPE')
-		InArea3 = IsEntityInZone(SheriffPatrol7, 'DESRT')
-		InArea4 = IsEntityInZone(SheriffPatrol7, 'SLAB')
-		InArea5 = IsEntityInZone(SheriffPatrol7, 'HARMO')
-	
-		if not InArea1 and not InArea2 and not InArea3 and not InArea4 and not InArea5 then
-			DeleteVehicle(spawnedVeh7)
-			Wait(100)
-			DeletePed(SheriffPatrol7)
-			Wait(100)
-			NewDeputyVehicles7()
-			NewDeputy7()
-			RollOut7()
-		end
-
-		if isDead then
-		DeletePed(SheriffPatrol7)
-		Wait(100)
-		DeleteVehicle(spawnedVeh7)
-		Wait(100)
-		NewDeputyVehicles7()
-		NewDeputy7()
-		RollOut7()
-		end
-end   	
-
-	
-function NewDeputy1()
-		SheriffPatrol1 = CreatePed(30, 0xB144F9B9, 1853.79, 3686.12, 34.35, 211.93, true, false)
-		SetPedArmour(SheriffPatrol1, 100)
-		SetPedRelationshipGroupHash(SheriffPatrol1, 0xA49E591C)
-		SetPedAsEnemy(SheriffPatrol1, false)
-		GiveWeaponToPed(SheriffPatrol1, GetHashKey('WEAPON_PISTOL'), 68, false, true)
-		GiveWeaponToPed(SheriffPatrol1, GetHashKey('WEAPON_PUMPSHOTGUN'), 100, false, true)
-		--GiveWeaponToPed(SheriffPatrol1, GetHashKey('WEAPON_CARBINERIFLE'), 250, false, true)
-		SetCurrentPedWeapon(SheriffPatrol1, GetHashKey('WEAPON_PISTOL'), 0)
-		SetPedAccuracy(SheriffPatrol1, 60)
-		SetPedDropsWeaponsWhenDead(SheriffPatrol1, true)
-		SetDriverAbility(SheriffPatrol1, 1.0)
-		Citizen.Wait(500)
-end
-
-function NewDeputy2()
-		SheriffPatrol2 = CreatePed(30, 0xB144F9B9, 1849.319, 3689.196, 34.35, 211.93, true, false)
-		SetPedArmour(SheriffPatrol2, 100)
-		SetPedRelationshipGroupHash(SheriffPatrol2, 0xA49E591C)
-		SetPedAsEnemy(SheriffPatrol2, false)
-		GiveWeaponToPed(SheriffPatrol2, GetHashKey('WEAPON_PISTOL'), 68, false, true)
-		GiveWeaponToPed(SheriffPatrol2, GetHashKey('WEAPON_PUMPSHOTGUN'), 100, false, true)
-		--GiveWeaponToPed(SheriffPatrol2, GetHashKey('WEAPON_CARBINERIFLE'), 250, false, true)
-		SetCurrentPedWeapon(SheriffPatrol2, GetHashKey('WEAPON_PISTOL'), 0)
-		SetPedAccuracy(SheriffPatrol2, 60)
-		SetPedDropsWeaponsWhenDead(SheriffPatrol2, true)
-		SetDriverAbility(SheriffPatrol2, 1.0)
-		Citizen.Wait(500)
-
-end
-
-function NewDeputy3()
-		SheriffPatrol3 = CreatePed(30, 0xB144F9B9, 1852.879, 3690.237, 34.35, 211.93, true, false)
-		SetPedArmour(SheriffPatrol3, 100)
-		SetPedRelationshipGroupHash(SheriffPatrol3, 0xA49E591C)
-		SetPedAsEnemy(SheriffPatrol3, false)
-		GiveWeaponToPed(SheriffPatrol3, GetHashKey('WEAPON_PISTOL'), 68, false, true)
-		GiveWeaponToPed(SheriffPatrol3, GetHashKey('WEAPON_PUMPSHOTGUN'), 100, false, true)
-		--GiveWeaponToPed(SheriffPatrol3, GetHashKey('WEAPON_CARBINERIFLE'), 250, false, true)
-		SetCurrentPedWeapon(SheriffPatrol3, GetHashKey('WEAPON_PISTOL'), 0)
-		SetPedAccuracy(SheriffPatrol3, 60)
-		SetPedDropsWeaponsWhenDead(SheriffPatrol3, true)
-		SetDriverAbility(SheriffPatrol3, 1.0)
-		Citizen.Wait(500)
-		
-end
-
-function NewDeputy4()
-		SheriffPatrol4 = CreatePed(30, 0xB144F9B9, 1856.98, 3689.077, 34.35, 211.93, true, false)
-		SetPedArmour(SheriffPatrol4, 100)
-		SetPedRelationshipGroupHash(SheriffPatrol4, 0xA49E591C)
-		SetPedAsEnemy(SheriffPatrol4, false)
-		GiveWeaponToPed(SheriffPatrol4, GetHashKey('WEAPON_PISTOL'), 68, false, true)
-		GiveWeaponToPed(SheriffPatrol4, GetHashKey('WEAPON_PUMPSHOTGUN'), 100, false, true)
-		--GiveWeaponToPed(SheriffPatrol4, GetHashKey('WEAPON_CARBINERIFLE'), 250, false, true)
-		SetCurrentPedWeapon(SheriffPatrol4, GetHashKey('WEAPON_PISTOL'), 0)
-		SetPedAccuracy(SheriffPatrol4, 60)
-		SetPedDropsWeaponsWhenDead(SheriffPatrol4, true)
-		SetDriverAbility(SheriffPatrol4, 1.0)
-		Citizen.Wait(500)
-		
-end
-
-function NewDeputy5()
-		SheriffPatrol5 = CreatePed(30, 0xB144F9B9, 1851.705, 3683.314, 34.35, 211.93, true, false)
-		SetPedArmour(SheriffPatrol5, 100)
-		SetPedRelationshipGroupHash(SheriffPatrol5, 0xA49E591C)
-		SetPedAsEnemy(SheriffPatrol5, false)
-		GiveWeaponToPed(SheriffPatrol5, GetHashKey('WEAPON_PISTOL'), 68, false, true)
-		GiveWeaponToPed(SheriffPatrol5, GetHashKey('WEAPON_PUMPSHOTGUN'), 100, false, true)
-		--GiveWeaponToPed(SheriffPatrol5, GetHashKey('WEAPON_CARBINERIFLE'), 250, false, true)
-		SetCurrentPedWeapon(SheriffPatrol5, GetHashKey('WEAPON_PISTOL'), 0)
-		SetPedAccuracy(SheriffPatrol5, 60)
-		SetPedDropsWeaponsWhenDead(SheriffPatrol5, true)
-		SetDriverAbility(SheriffPatrol5, 1.0)
-		Citizen.Wait(500)
-		
-		
-end
-
-function NewDeputy6()
-		SheriffPatrol6 = CreatePed(30, 0x4161D042, 1853.525, 3680.875, 34.35, 211.93, true, false)
-		SetPedArmour(SheriffPatrol6, 100)
-		SetPedRelationshipGroupHash(SheriffPatrol6, 0xA49E591C)
-		SetPedAsEnemy(SheriffPatrol6, false)
-		GiveWeaponToPed(SheriffPatrol6, GetHashKey('WEAPON_PISTOL'), 68, false, true)
-		GiveWeaponToPed(SheriffPatrol6, GetHashKey('WEAPON_PUMPSHOTGUN'), 100, false, true)
-		--GiveWeaponToPed(SheriffPatrol6, GetHashKey('WEAPON_CARBINERIFLE'), 250, false, true)
-		SetCurrentPedWeapon(SheriffPatrol6, GetHashKey('WEAPON_PISTOL'), 0)
-		SetPedAccuracy(SheriffPatrol6, 60)
-		SetPedDropsWeaponsWhenDead(SheriffPatrol6, true)
-		SetDriverAbility(SheriffPatrol6, 1.0)
-		Citizen.Wait(500)
-		
-end
-
-function NewDeputy7()
-		SheriffPatrol7 = CreatePed(30, 0x4161D042, 1856.598, 3683.96, 34.35, 211.93, true, false)
-		SetPedArmour(SheriffPatrol7, 100)
-		SetPedRelationshipGroupHash(SheriffPatrol7, 0xA49E591C)
-		SetPedAsEnemy(SheriffPatrol7, false)
-		GiveWeaponToPed(SheriffPatrol7, GetHashKey('WEAPON_PISTOL'), 68, false, true)
-		GiveWeaponToPed(SheriffPatrol7, GetHashKey('WEAPON_PUMPSHOTGUN'), 100, false, true)
-		--GiveWeaponToPed(SheriffPatrol7, GetHashKey('WEAPON_CARBINERIFLE'), 250, false, true)
-		SetCurrentPedWeapon(SheriffPatrol7, GetHashKey('WEAPON_PISTOL'), 0)
-		SetPedAccuracy(SheriffPatrol7, 60)
-		SetPedDropsWeaponsWhenDead(SheriffPatrol7, true)
-		SetDriverAbility(SheriffPatrol7, 1.0)
-		Citizen.Wait(500)
-		
-end
-
-function NewDeputyVehicles1()
-	ClearAreaOfVehicles(1854.89, 3675.82, 34.59, 3, false, false, false, false, false)
-	spawnedVeh1 = CreateVehicle(vehiclehash2, 1854.89, 3675.82, 34.59338, 211.93, 0)
-	SetVehicleDirtLevel(spawnedVeh1, 0.1)
-end		
-
-function NewDeputyVehicles2()
-	ClearAreaOfVehicles(1870.76, 3686.53, 34.59, 3, false, false, false, false, false)
-	spawnedVeh2 = CreateVehicle(vehiclehash3, 1870.76, 3686.532, 34.59, 211.93, 0)
-	SetVehicleDirtLevel(spawnedVeh2, 0.1)
-end		
-
-function NewDeputyVehicles3()
-	ClearAreaOfVehicles(1875.31, 3692.756, 33.02,4, false, false, false, false, false)	
-	spawnedVeh3 = CreateVehicle(vehiclehash, 1875.31, 3692.756, 33.02, 211.93, 0)
-	SetVehicleDirtLevel(spawnedVeh3, 0.1)
-end		
-
-function NewDeputyVehicles4()
-	ClearAreaOfVehicles(1850.4, 3673.987, 34.59, 3, false, false, false, false, false)
-	spawnedVeh4 = CreateVehicle(vehiclehash2, 1850.4, 3673.987, 34.59, 211.93, 0)
-	SetVehicleDirtLevel(spawnedVeh4, 0.1)
-end		
-
-function NewDeputyVehicles5()
-	ClearAreaOfVehicles(1846.85, 3671.84, 34.59, 3, false, false, false, false, false)
-	spawnedVeh5 = CreateVehicle(vehiclehash, 1846.853, 3671.842, 34.59, 211.93, 0)
-	SetVehicleDirtLevel(spawnedVeh5, 0.1)
-end		
-
-function NewDeputyVehicles6()
-	ClearAreaOfVehicles(1865.407, 3703.728, 34.59, 3, false, false, false, false, false)
-	spawnedVeh6 = CreateVehicle(vehiclehash3, 1865.407, 3703.728, 34.59, 31.93, 0)
-	SetVehicleDirtLevel(spawnedVeh6, 0.1)
-end		
-
-function NewDeputyVehicles7()
-	ClearAreaOfVehicles(1859.789, 3715.187, 34.59, 3, false, false, false, false, false)	
-	spawnedVeh7 = CreateVehicle(vehiclehash, 1859.789, 3715.187, 34.59, 31.93, 0)
-	SetVehicleDirtLevel(spawnedVeh7, 0.1)
-end		
-
-function RollOut1()
-	TaskVehicleDriveWander(SheriffPatrol1, spawnedVeh1, 15.0, 439)
-	--Wait(2500)
-end	
-
-function RollOut2()	
-	TaskVehicleDriveWander(SheriffPatrol2, spawnedVeh2, 15.0, 439)
-	--Wait(2500)
-end
-
-function RollOut3()
-	TaskVehicleDriveWander(SheriffPatrol3, spawnedVeh3, 15.0, 439)
-	--Wait(2500)
-end
-		
-function RollOut4()
-	TaskVehicleDriveWander(SheriffPatrol4, spawnedVeh4, 15.0, 439)
-	--Wait(2500)
-end
-		
-function RollOut5()	
-	TaskVehicleDriveWander(SheriffPatrol5, spawnedVeh5, 15.0, 439)
-	--Wait(2500)
-end		
-		
-function RollOut6()		
-	TaskVehicleDriveWander(SheriffPatrol6, spawnedVeh6, 15.0, 439)
-	--Wait(2500)
-end
-		
-function RollOut7()	
-	TaskVehicleDriveWander(SheriffPatrol7, spawnedVeh7, 15.0, 439)
-end
-		
-	
